@@ -152,11 +152,8 @@
     </style>
 </head>
 <body>
-    <audio id="music-intro" loop preload="auto">
-        <source src="musik.mp3" type="audio/mpeg">
-    </audio>
     <audio id="music-surprise" loop preload="auto">
-        <source src="musik2.mp3" type="audio/mpeg">
+        <source src="musik.mp3" type="audio/mpeg">
     </audio>
 
     <div id="overlay">
@@ -184,7 +181,6 @@
         // --- Referensi Elemen ---
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
-        const musicIntro = document.getElementById('music-intro');
         const musicSurprise = document.getElementById('music-surprise');
         const countdownContainer = document.getElementById('countdown-container');
         const countdownMessage = document.getElementById('countdown-message');
@@ -200,8 +196,6 @@
             mainContent.classList.remove('hidden');
             simpleCountdown.style.display = 'none'; // Sembunyikan hitung mundur
 
-            musicIntro.pause();
-            musicIntro.currentTime = 0;
             musicSurprise.play().catch(e => console.error("Musik kejutan gagal diputar:", e));
 
             countdownMessage.classList.remove('hidden');
@@ -265,7 +259,6 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
                 countdownContainer.classList.add('animate');
-                musicIntro.play().catch(e => console.error("Musik intro gagal diputar:", e));
                 startSimpleCountdown();
             }, 1000);
         });
