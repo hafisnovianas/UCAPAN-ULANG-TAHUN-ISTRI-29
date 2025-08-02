@@ -45,10 +45,13 @@
         .animated-text.animate {
              animation: slideUpFadeIn 1s ease-out forwards;
         }
-        h1, #countdown-message {
+        h1, #countdown-message{
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 4rem; /* Dibuat lebih besar agar fokus */
             text-shadow: 2px 2px 5px var(--shadow-color);
+        }
+        #simple-countdown {
+          font-size: 10rem;
         }
         h2 {
             font-size: 2.2rem;
@@ -72,19 +75,8 @@
         }
         #countdown-container { 
             margin-top: 30px;
+            min-height: 100px; /* Memberi ruang agar tidak lompat saat konten berubah */
         }
-        #timer {
-            display: inline-flex;
-            gap: 10px;
-        }
-        #timer-box {
-            font-size: 1rem;
-            padding: 10px 20px;
-            background: var(--secondary-color);
-            border-radius: 10px;
-            min-width: 80px;
-        }
-        #timer-box span { display: block; font-size: 2rem; font-weight: bold; }
         .glowing {
             animation: slideUpFadeIn 1s ease-out forwards, glow 1.5s ease-in-out 1s infinite alternate;
         }
@@ -151,12 +143,11 @@
         }
 
         @media (max-width: 768px) {
-            h1, #countdown-message { font-size: 2.0rem; }
+            h1, #countdown-message { font-size: 4.0rem; }
             h2 { font-size: 1.5rem; }
             h3 { font-size: 1.2rem; }
-            p { font-size: 0.8rem; }
-            #timer-box { padding: 8px 10px; min-width: 60px; }
-            #timer-box span { font-size: 1.5rem; }
+            p { font-size: 0.9rem; }
+            #simple-countdown { font-size: 10.0rem; }
         }
     </style>
 </head>
@@ -175,20 +166,16 @@
 
     <div class="container hidden" id="main-content">
         <div id="countdown-container" class="animated-text">
-            <h1 id="countdown-message" class="hidden">✨ Barakallahu Fiy Umrik ✨</h1>
+            <h1 id="countdown-message" class="hidden">Barakallahu Fiy Umrik</h1>
             <h2 id="ucapan2" class="hidden animated-text">Istriku Sayang, Riri Gusfita</h2>
-            <div id="timer">
-                <div id="timer-box"> <span id="days">0</span>Hari </div>
-                <div id="timer-box"> <span id="hours">0</span>Jam </div>
-                <div id="timer-box"> <span id="minutes">0</span>Menit </div>
-                <div id="timer-box"> <span id="seconds">0</span>Detik </div>
-            </div>
         </div>
 
         <p id="pesan-cinta" class="hidden animated-text">
             Ini adalah persembahan cintaku untukmu di hari yang paling istimewa. Semoga di usiamu yang baru ini, Allah Subhannahu Wa Ta'ala senantiasa memberkahi setiap langkahmu. Aku sangat mencintaimu.
         </p>
     </div>
+
+    <div id="simple-countdown">10</div>
 
     <div class="hearts-container"></div>
     <div class="confetti-container"></div>
@@ -201,18 +188,17 @@
         const musicSurprise = document.getElementById('music-surprise');
         const countdownContainer = document.getElementById('countdown-container');
         const countdownMessage = document.getElementById('countdown-message');
-        const timer = document.getElementById('timer');
+        const simpleCountdown = document.getElementById('simple-countdown'); // Elemen baru
         const ucapan2 = document.getElementById('ucapan2');
         const pesanCinta = document.getElementById('pesan-cinta');
         const heartsContainer = document.querySelector('.hearts-container');
         const confettiContainer = document.querySelector('.confetti-container');
         
-        const countDownDate = new Date("Aug 3, 2025 00:09:00").getTime();
-        let countdownFinished = false;
-
+        // Kode untuk hitung mundur berdasarkan tanggal sudah tidak diperlukan lagi
+        
         function playKejutan() {
-            countdownFinished = true;
-            timer.style.display = 'none';
+            mainContent.classList.remove('hidden');
+            simpleCountdown.style.display = 'none'; // Sembunyikan hitung mundur
 
             musicIntro.pause();
             musicIntro.currentTime = 0;
@@ -233,26 +219,21 @@
             }, 2000);
         }
 
-        function updateCountdown() {
-            if (countdownFinished) return;
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
+        // Fungsi baru untuk hitung mundur sederhana
+        function startSimpleCountdown() {
+            let countdownNumber = 10;
+            simpleCountdown.textContent = countdownNumber;
 
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                playKejutan();
-                return;
-            }
+            const countdownInterval = setInterval(() => {
+                countdownNumber--;
+                simpleCountdown.textContent = countdownNumber;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.querySelector('#days').innerText = days;
-            document.querySelector('#hours').innerText = hours;
-            document.querySelector('#minutes').innerText = minutes;
-            document.querySelector('#seconds').innerText = seconds;
+                if (countdownNumber <= 0) {
+                    clearInterval(countdownInterval);
+                    // Beri jeda sedikit sebelum kejutan dimulai
+                    setTimeout(playKejutan, 500); 
+                }
+            }, 1000);
         }
 
         function createEffectElement(container, className, innerHTML, durationMin, durationMax) {
@@ -283,15 +264,13 @@
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                mainContent.classList.remove('hidden');
                 countdownContainer.classList.add('animate');
                 musicIntro.play().catch(e => console.error("Musik intro gagal diputar:", e));
+                startSimpleCountdown();
             }, 1000);
         });
         
-        // --- Inisialisasi ---
-        const countdownInterval = setInterval(updateCountdown, 1000);
-
+        // Inisialisasi interval tidak lagi diperlukan di sini
     </script>
 </body>
 </html>
