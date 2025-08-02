@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF--8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sebuah Persembahan Spesial</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -161,9 +161,11 @@
     </style>
 </head>
 <body>
-    <audio id="background-music" loop>
+    <audio id="music-intro" loop preload="auto">
         <source src="musik.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
+    </audio>
+    <audio id="music-surprise" loop preload="auto">
+        <source src="musik2.mp3" type="audio/mpeg">
     </audio>
 
     <div id="overlay">
@@ -195,7 +197,8 @@
         // --- Referensi Elemen ---
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
-        const music = document.getElementById('background-music');
+        const musicIntro = document.getElementById('music-intro');
+        const musicSurprise = document.getElementById('music-surprise');
         const countdownContainer = document.getElementById('countdown-container');
         const countdownMessage = document.getElementById('countdown-message');
         const timer = document.getElementById('timer');
@@ -204,14 +207,16 @@
         const heartsContainer = document.querySelector('.hearts-container');
         const confettiContainer = document.querySelector('.confetti-container');
         
-        // --- Pengaturan Countdown ---
-        const countDownDate = new Date("Aug 2, 2025 23:50:00").getTime();
+        const countDownDate = new Date("Aug 3, 2025 00:09:00").getTime();
         let countdownFinished = false;
 
-        // --- Fungsi-fungsi ---
         function playKejutan() {
             countdownFinished = true;
             timer.style.display = 'none';
+
+            musicIntro.pause();
+            musicIntro.currentTime = 0;
+            musicSurprise.play().catch(e => console.error("Musik kejutan gagal diputar:", e));
 
             countdownMessage.classList.remove('hidden');
             countdownMessage.classList.add('glowing');
@@ -230,7 +235,6 @@
 
         function updateCountdown() {
             if (countdownFinished) return;
-            
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
@@ -281,11 +285,9 @@
                 overlay.style.display = 'none';
                 mainContent.classList.remove('hidden');
                 countdownContainer.classList.add('animate');
-                music.play().catch(e => console.error("Musik gagal diputar:", e));
+                musicIntro.play().catch(e => console.error("Musik intro gagal diputar:", e));
             }, 1000);
         });
-
-        music.addEventListener('ended', () => music.play());
         
         // --- Inisialisasi ---
         const countdownInterval = setInterval(updateCountdown, 1000);
