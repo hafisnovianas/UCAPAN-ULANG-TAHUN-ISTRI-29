@@ -28,7 +28,7 @@
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            transition: background 2s ease; /* Transisi untuk perubahan background */
+            transition: background 2s ease;
         }
         .container {
             position: relative;
@@ -39,7 +39,7 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 var(--shadow-color);
-            transition: color 2s ease, background 2s ease; /* Transisi untuk perubahan warna */
+            transition: color 2s ease, background 2s ease;
         }
         .animated-text {
             opacity: 0;
@@ -61,12 +61,6 @@
             margin-top: 10px;
             font-weight: 600;
             text-shadow: 1px 1px 4px var(--shadow-color);
-        }
-        h3 {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            font-weight: 400;
-            text-shadow: 1px 1px 3px var(--shadow-color);
         }
         p {
             margin-top: 25px;
@@ -145,14 +139,34 @@
             100% { transform: translateY(110vh) rotateZ(720deg); opacity: 0; }
         }
 
-        /* --- [BAGIAN 2: CSS DARI KODE KEDUA] --- */
-        /* Kontainer untuk cerita, nama kelas diubah agar tidak bentrok */
+        /* --- [BAGIAN 2: CSS DARI KODE KEDUA + TOMBOL BARU] --- */
+        
+        /* Gaya untuk Tombol Baru */
+        #show-story-btn {
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--text-color);
+            padding: 12px 24px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        #show-story-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--secondary-color);
+        }
+
         .story-container {
             max-width: 700px;
             width: 90%;
             padding: 40px 20px;
-            display: none; /* Disembunyikan awalnya */
-            margin-top: 50px; /* Jarak dari kontainer ucapan */
+            display: none;
+            margin-top: 50px;
         }
         .card {
             background-color: transparent;
@@ -162,7 +176,7 @@
             text-align: center;
             line-height: 1.8;
             font-size: 1.1em;
-            color: #3d3d3d; /* Warna teks diatur di sini */
+            color: #3d3d3d;
             font-family: 'Nunito Sans', sans-serif;
             opacity: 0;
             transform: translateY(30px);
@@ -192,19 +206,17 @@
             transform: translateY(0);
         }
 
-        /* --- [BAGIAN 3: Media Query & Penyesuaian] --- */
         @media (max-width: 768px) {
-            h1, #countdown-message { font-size: 3.0rem; } /* Disesuaikan sedikit */
+            h1, #countdown-message { font-size: 3.0rem; }
             h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.2rem; }
             p { font-size: 0.9rem; }
-            #simple-countdown { font-size: 8.0rem; } /* Disesuaikan sedikit */
+            #simple-countdown { font-size: 8.0rem; }
         }
     </style>
 </head>
 <body>
     <audio id="music-surprise" loop preload="auto">
-        <source src="musik.mp3" type="audio/mpeg">
+        <source src="musik.m4a" type="audio/mpeg">
     </audio>
 
     <div id="overlay">
@@ -220,6 +232,9 @@
         <p id="pesan-cinta" class="hidden animated-text">
             Ini adalah persembahan cintaku untukmu di hari yang paling istimewa. Semoga di usiamu yang baru ini, Allah Subhannahu Wa Ta'ala senantiasa memberkahi setiap langkahmu. Aku sangat mencintaimu.
         </p>
+        <button id="show-story-btn" class="hidden animated-text">
+            Lihat Kisah Kita &#8595;
+        </button>
     </div>
     
     <div class="story-container">
@@ -265,7 +280,6 @@
     <div class="confetti-container"></div>
     
     <script>
-        // --- Referensi Elemen ---
         const overlay = document.getElementById('overlay');
         const mainContent = document.getElementById('main-content');
         const musicSurprise = document.getElementById('music-surprise');
@@ -277,6 +291,7 @@
         const heartsContainer = document.querySelector('.hearts-container');
         const confettiContainer = document.querySelector('.confetti-container');
         const storyContainer = document.querySelector('.story-container');
+        const showStoryBtn = document.getElementById('show-story-btn'); // Referensi tombol baru
         
         function playKejutan() {
             mainContent.classList.remove('hidden');
@@ -295,10 +310,12 @@
             setTimeout(() => {
                 pesanCinta.classList.remove('hidden');
                 pesanCinta.classList.add('animate');
-                startSpecialEffects();
                 
-                // Setelah pesan terakhir muncul, tunggu sebentar lalu tampilkan cerita
-                setTimeout(revealStory, 40000);
+                // Tampilkan tombol untuk melanjutkan
+                showStoryBtn.classList.remove('hidden');
+                showStoryBtn.classList.add('animate');
+
+                startSpecialEffects();
             }, 2000);
         }
 
@@ -317,11 +334,9 @@
             }, 1000);
         }
 
-        // --- FUNGSI BARU UNTUK TRANSISI KE BAGIAN CERITA ---
         function revealStory() {
             const body = document.body;
             
-            // Ubah gaya body agar bisa di-scroll dan ganti background
             body.style.flexDirection = 'column';
             body.style.justifyContent = 'flex-start';
             body.style.overflowY = 'auto';
@@ -329,18 +344,13 @@
             body.style.background = '#fdf8f5';
             body.style.animation = 'none';
 
-            // Ubah warna teks di kontainer utama agar kontras dengan background baru
             mainContent.style.color = '#3d3d3d';
             mainContent.style.background = 'rgba(255, 255, 255, 0.7)';
             mainContent.style.borderColor = 'rgba(90, 79, 74, 0.2)';
 
-            mainContent.classList.add('hidden');
-
-            // Sembunyikan efek partikel agar tidak mengganggu saat scroll
             if (heartsContainer) heartsContainer.style.display = 'none';
             if (confettiContainer) confettiContainer.style.display = 'none';
             
-            // Tampilkan kontainer cerita
             if (storyContainer) {
                 storyContainer.style.display = 'block';
             }
@@ -355,7 +365,6 @@
             element.style.animationDelay = `${Math.random() * 5}s`;
             if(className === 'heart') element.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
             container.appendChild(element);
-            // Return element untuk modifikasi lebih lanjut (untuk confetti)
             return element;
         }
 
@@ -381,7 +390,15 @@
             }, 1000);
         });
 
-        // --- JAVASCRIPT UNTUK ANIMASI SCROLL DARI KODE KEDUA ---
+        // Event listener BARU untuk tombol
+        showStoryBtn.addEventListener('click', () => {
+            revealStory();
+            // Sembunyikan tombol setelah diklik agar tidak mengganggu
+            showStoryBtn.style.display = 'none'; 
+            mainContent.classList.add('hidden');
+        });
+
+        // --- Intersection Observer untuk animasi scroll ---
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -390,7 +407,7 @@
                 }
             });
         }, {
-            threshold: 0.2 // Kartu akan muncul saat 20% bagiannya terlihat
+            threshold: 0.2 
         });
 
         cards.forEach(card => {
