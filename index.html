@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF--8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sebuah Persembahan Spesial</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito+Sans:wght@300;400&family=Playfair+Display:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* --- [BAGIAN 1: CSS DARI KODE PERTAMA] --- */
         :root {
             --primary-color: #ff8fab;
             --secondary-color: #f7b2b7;
@@ -27,6 +28,7 @@
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            transition: background 2s ease; /* Transisi untuk perubahan background */
         }
         .container {
             position: relative;
@@ -37,21 +39,22 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 var(--shadow-color);
+            transition: color 2s ease, background 2s ease; /* Transisi untuk perubahan warna */
         }
         .animated-text {
             opacity: 0;
             transform: translateY(30px);
         }
         .animated-text.animate {
-             animation: slideUpFadeIn 1s ease-out forwards;
+            animation: slideUpFadeIn 1s ease-out forwards;
         }
         h1, #countdown-message{
             font-family: 'Dancing Script', cursive;
-            font-size: 4rem; /* Dibuat lebih besar agar fokus */
+            font-size: 4rem;
             text-shadow: 2px 2px 5px var(--shadow-color);
         }
         #simple-countdown {
-          font-size: 10rem;
+            font-size: 10rem;
         }
         h2 {
             font-size: 2.2rem;
@@ -75,7 +78,7 @@
         }
         #countdown-container { 
             margin-top: 30px;
-            min-height: 100px; /* Memberi ruang agar tidak lompat saat konten berubah */
+            min-height: 100px;
         }
         .glowing {
             animation: slideUpFadeIn 1s ease-out forwards, glow 1.5s ease-in-out 1s infinite alternate;
@@ -142,12 +145,60 @@
             100% { transform: translateY(110vh) rotateZ(720deg); opacity: 0; }
         }
 
+        /* --- [BAGIAN 2: CSS DARI KODE KEDUA] --- */
+        /* Kontainer untuk cerita, nama kelas diubah agar tidak bentrok */
+        .story-container {
+            max-width: 700px;
+            width: 90%;
+            padding: 40px 20px;
+            display: none; /* Disembunyikan awalnya */
+            margin-top: 50px; /* Jarak dari kontainer ucapan */
+        }
+        .card {
+            background-color: transparent;
+            border-radius: 8px;
+            padding: 2em 0;
+            margin-bottom: 3em;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #3d3d3d; /* Warna teks diatur di sini */
+            font-family: 'Nunito Sans', sans-serif;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .card.intro, .card.outro {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            line-height: 1.4;
+            color: #5a4f4a;
+        }
+        .card.intro .subtitle {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.5em;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+        .card.outro .signature {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.6em;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- [BAGIAN 3: Media Query & Penyesuaian] --- */
         @media (max-width: 768px) {
-            h1, #countdown-message { font-size: 4.0rem; }
+            h1, #countdown-message { font-size: 3.0rem; } /* Disesuaikan sedikit */
             h2 { font-size: 1.5rem; }
             h3 { font-size: 1.2rem; }
             p { font-size: 0.9rem; }
-            #simple-countdown { font-size: 10.0rem; }
+            #simple-countdown { font-size: 8.0rem; } /* Disesuaikan sedikit */
         }
     </style>
 </head>
@@ -166,10 +217,46 @@
             <h1 id="countdown-message" class="hidden">Barakallahu Fiy Umrik</h1>
             <h2 id="ucapan2" class="hidden animated-text">Istriku Sayang, Riri Gusfita</h2>
         </div>
-
         <p id="pesan-cinta" class="hidden animated-text">
             Ini adalah persembahan cintaku untukmu di hari yang paling istimewa. Semoga di usiamu yang baru ini, Allah Subhannahu Wa Ta'ala senantiasa memberkahi setiap langkahmu. Aku sangat mencintaimu.
         </p>
+    </div>
+    
+    <div class="story-container">
+        <div class="card intro">
+            Untukmu, Senja.
+            <div class="subtitle">Sebuah perjalanan singkat untuk mengingat kembali cerita yang menjadikan kita 'kita'.<br><i>Scroll ke bawah perlahan...</i></div>
+        </div>
+        <div class="card">Aku ingat hari itu di praktikum kimia. Bukan sebagai awal cinta, tapi sebagai awal aku mengenal sosokmu yang 'menyeramkan' sekaligus berwibawa. Aku bahkan canggung untuk mendekat.</div>
+        <div class="card">Lalu sebuah proyek kuliah mengubah segalanya. Kamu yang meminta bantuan, dan aku yang tanpa sadar mulai mengejar. Hari-hari penuh kegalauan, karena aku tahu hatimu belum untukku.</div>
+        <div class="card">Tapi kita tidak bisa dihentikan. Bahkan saat dosen menasihati kita di ruang terpisah, kita tetap memilih untuk bersama. Seolah dunia menyerah pada kedekatan kita.</div>
+        <div class="card">Lalu lahirlah sebuah ide brilian darimu: "Jam Serat Tebu". Aku masih ingat malam-malam panjang kita revisi proposal di rumah Bu Fit, penuh harapan.</div>
+        <div class="card">Dan kita berhasil! Pendanaan dari Kemenristekdikti. Kita menjadi yang pertama di prodi, sebuah kebanggaan yang kita bangun dengan tangan kita sendiri.</div>
+        <div class="card">Kita membuat ratusan jam itu dengan susah payah. Sangat manual, sangat melelahkan, tapi kita melakukannya bersama.</div>
+        <div class="card">Momen paling mendebarkan: kabar lolos PIMNAS ke-31 di UNY! Kita harus pulang dari KKN, sebuah momen haru biru yang membahagiakan sekaligus membanggakan.</div>
+        <div class="card">Perjalanan ke Jogja adalah perjalanan paling berkesan. Aku membawamu pergi dengan sebuah kebanggaan besar atas perjuangan kita berdua.</div>
+        <div class="card">Tapi nasib berkata lain. Di ruang presentasi itu, kita dibuat tak bisa berkata apa-apa. Harapan kita seakan dipatahkan.</div>
+        <div class="card">Aku melihatmu menangis begitu sedih saat tak ada satu pun medali yang kita raih. Malam itu, aku hanya bisa diam, walau seharusnya aku menguatkanmu lebih dari itu.</div>
+        <div class="card">Dan jam pertama yang kita buat, simbol usaha kita, hilang entah ke mana. Tapi kenangannya tidak. Di dalamnya, aku menemukan 'dia', 'aku', dan 'waktu' yang pernah kita banggakan.</div>
+        <div class="card">Meski dengan kamera seadanya, liburan singkat kita setelahnya menjadi pengobat hati. Cukup untuk membuat kita terhibur dari kecewa yang dalam.</div>
+        <div class="card">Ingatkah kamu? Kita sering pergi tanpa tujuan, yang penting jalan-jalan keliling naik motor walau tak punya uang.</div>
+        <div class="card">Atau saat kita sama-sama bolos mengajar private hanya karena ingin menghabiskan waktu berdua.</div>
+        <div class="card">Dan lucunya, kita sering parkir motorku di kampus atau di mall, hanya agar bisa pergi berdua naik motormu. Itu adalah petualangan kecil kita.</div>
+        <div class="card">Aku selalu mengagumi kecerdasanmu. Aku jatuh cinta pada gadis cerdas, dan gadis itu adalah kamu.</div>
+        <div class="card">Kamu adalah wanita terkuat yang aku kenal. Kamu telah memberiku hadiah terindah dengan melahirkan anak-anak kita.</div>
+        <div class="card">Aku suka melihatmu begitu hidup saat membaca komik. Teruslah nikmati duniamu, karena bahagiamu adalah bahagiaku.</div>
+        <div class="card">Terima kasih untuk hal-hal sederhana yang tak pernah lupa kamu lakukan. Secangkir minuman atau makanan yang siap tanpa kuminta. Kamu selalu tahu.</div>
+        <div class="card">Momen saat aku mengucapkan akad nikah, seluruh tubuhku bergetar. Itulah titik baliknya. Kamu akhirnya menjadi milikku seutuhnya, tanpa perlu kucing-kucingan lagi.</div>
+        <div class="card">Impianku saat ini adalah membangun istana untukmu. Dan di tahun-tahun mendatang, aku ingin membawamu berkeliling dunia, menebus semua perjalanan yang belum sempat kita lakukan.</div>
+        <div class="card outro">
+            Senja,
+            <div class="subtitle" style="font-size: 0.6em;">Seperti lirik lagu itu, aku tidak bisa membayangkan bagaimana hidupku tanpamu.
+            <br>Jangan pernah lupakan bahwa kamu adalah separuh hidupku, alasan terbesarku untuk mewujudkan masa depan yang indah bersama anak-anak kita.</div>
+            <div class="signature">
+                Selamat Ulang Tahun, Istriku.
+                <br>Dari suamimu yang selalu mencintaimu.
+            </div>
+        </div>
     </div>
 
     <div id="simple-countdown">10</div>
@@ -184,17 +271,16 @@
         const musicSurprise = document.getElementById('music-surprise');
         const countdownContainer = document.getElementById('countdown-container');
         const countdownMessage = document.getElementById('countdown-message');
-        const simpleCountdown = document.getElementById('simple-countdown'); // Elemen baru
+        const simpleCountdown = document.getElementById('simple-countdown');
         const ucapan2 = document.getElementById('ucapan2');
         const pesanCinta = document.getElementById('pesan-cinta');
         const heartsContainer = document.querySelector('.hearts-container');
         const confettiContainer = document.querySelector('.confetti-container');
-        
-        // Kode untuk hitung mundur berdasarkan tanggal sudah tidak diperlukan lagi
+        const storyContainer = document.querySelector('.story-container');
         
         function playKejutan() {
             mainContent.classList.remove('hidden');
-            simpleCountdown.style.display = 'none'; // Sembunyikan hitung mundur
+            simpleCountdown.style.display = 'none';
 
             musicSurprise.play().catch(e => console.error("Musik kejutan gagal diputar:", e));
 
@@ -210,10 +296,12 @@
                 pesanCinta.classList.remove('hidden');
                 pesanCinta.classList.add('animate');
                 startSpecialEffects();
+                
+                // Setelah pesan terakhir muncul, tunggu sebentar lalu tampilkan cerita
+                setTimeout(revealStory, 40000);
             }, 2000);
         }
 
-        // Fungsi baru untuk hitung mundur sederhana
         function startSimpleCountdown() {
             let countdownNumber = 10;
             simpleCountdown.textContent = countdownNumber;
@@ -224,10 +312,38 @@
 
                 if (countdownNumber <= 0) {
                     clearInterval(countdownInterval);
-                    // Beri jeda sedikit sebelum kejutan dimulai
                     setTimeout(playKejutan, 500); 
                 }
             }, 1000);
+        }
+
+        // --- FUNGSI BARU UNTUK TRANSISI KE BAGIAN CERITA ---
+        function revealStory() {
+            const body = document.body;
+            
+            // Ubah gaya body agar bisa di-scroll dan ganti background
+            body.style.flexDirection = 'column';
+            body.style.justifyContent = 'flex-start';
+            body.style.overflowY = 'auto';
+            body.style.height = 'auto';
+            body.style.background = '#fdf8f5';
+            body.style.animation = 'none';
+
+            // Ubah warna teks di kontainer utama agar kontras dengan background baru
+            mainContent.style.color = '#3d3d3d';
+            mainContent.style.background = 'rgba(255, 255, 255, 0.7)';
+            mainContent.style.borderColor = 'rgba(90, 79, 74, 0.2)';
+
+            mainContent.classList.add('hidden');
+
+            // Sembunyikan efek partikel agar tidak mengganggu saat scroll
+            if (heartsContainer) heartsContainer.style.display = 'none';
+            if (confettiContainer) confettiContainer.style.display = 'none';
+            
+            // Tampilkan kontainer cerita
+            if (storyContainer) {
+                storyContainer.style.display = 'block';
+            }
         }
 
         function createEffectElement(container, className, innerHTML, durationMin, durationMax) {
@@ -239,6 +355,8 @@
             element.style.animationDelay = `${Math.random() * 5}s`;
             if(className === 'heart') element.style.fontSize = `${Math.random() * 1.5 + 1}rem`;
             container.appendChild(element);
+            // Return element untuk modifikasi lebih lanjut (untuk confetti)
+            return element;
         }
 
         function startSpecialEffects() {
@@ -262,8 +380,23 @@
                 startSimpleCountdown();
             }, 1000);
         });
+
+        // --- JAVASCRIPT UNTUK ANIMASI SCROLL DARI KODE KEDUA ---
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2 // Kartu akan muncul saat 20% bagiannya terlihat
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
         
-        // Inisialisasi interval tidak lagi diperlukan di sini
     </script>
 </body>
 </html>
